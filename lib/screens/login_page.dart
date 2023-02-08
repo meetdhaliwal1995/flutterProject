@@ -17,7 +17,6 @@ class _LoginPageState extends State<LoginPage> {
         changeBtn = true;
       });
       await Future.delayed(const Duration(seconds: 1));
-      // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, MyRoutes.homeRoute).then((value) => {
             setState(() {
               changeBtn = false;
@@ -42,9 +41,12 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 20.0,
               ),
-              Text("Welcome $name",
-                  style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.bold)),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text("Welcome $name",
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.bold)),
+              ),
               const SizedBox(
                 height: 20.0,
               ),
@@ -59,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                         hintText: "Enter UserName",
                         labelText: "UserName",
                       ),
-                      validator: (value) {
+                      validator: (value) { 
                         if (value!.isEmpty) {
                           return "Username cannot be empty";
                         }
