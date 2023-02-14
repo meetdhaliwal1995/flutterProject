@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Item {
   final int id;
   final String name;
@@ -16,7 +18,7 @@ class Item {
 }
 
 class CatalogModel {
-  static final product = [
+  static List<Item> product = [
     Item(
         id: 1,
         name: "Flutter T-Shirt",
