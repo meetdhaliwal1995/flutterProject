@@ -11,7 +11,7 @@ class MyTheme {
             color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18.0),
       ),
       primarySwatch: Colors.red,
-      fontFamily: GoogleFonts.lato().fontFamily);
+      fontFamily: GoogleFonts.poppins().fontFamily);
 
   static ThemeData darkTheme(BuildContext context) => ThemeData(
         brightness: Brightness.dark,
