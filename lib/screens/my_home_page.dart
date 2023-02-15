@@ -1,6 +1,7 @@
+import 'dart:async';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import '../models/image_model.dart';
 import 'imgur_api.dart';
 
 void main() {
@@ -26,12 +27,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late Future<List<dynamic>> _futureImages;
+  // List<ImgurImages>? _futureImages;
+  // final ImgurApi _imgurApi = ImgurApi();
 
   @override
   void initState() {
     super.initState();
-    _futureImages = ImgurApi.getImages();
+
+    // Future.delayed(
+    //   Duration.zero,
+    //   () async {
+    //     _futureImages = await ImgurApi.getImages();
+    //   },
+    // );
   }
 
   @override
@@ -41,30 +49,33 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('Imgur API Example'),
       ),
       body: Center(
-        child: FutureBuilder<List<dynamic>>(
-          future: _futureImages,
+        child: FutureBuilder<ImgurImages>(
+          future: ImgurApi.getImages(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
-                itemCount: snapshot.data?.length,
+                itemCount: snapshot.data?.data?.length ?? 0,
                 itemBuilder: (context, index) {
-                  final image = snapshot.data![index];
-                  log(image.toString());
+                  final image = snapshot.data?.data?[index];
+                  log(image!.link.toString());
+                  print('datasssss  $image');
                   return ListTile(
+                    contentPadding:
+                        const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                     leading: Image.network(
-                      image['images'][0]['link'],
+                      image.images?[0].link ?? '',
                       width: 100,
                       height: 100,
                       fit: BoxFit.fill,
                     ),
-                    title: Text(image['title'] ?? ''),
+                    title: Text(image.title ?? ''),
                   );
                 },
               );
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
             }
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           },
         ),
       ),
